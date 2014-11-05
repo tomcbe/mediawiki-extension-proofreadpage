@@ -85,7 +85,7 @@ $wgAutoloadClasses['ProofreadPage\Parser\PagequalityTagParser'] = $dir . 'includ
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'ProofreadPage',
-	'author'         => array( 'ThomasV', 'Thomas Pellissier Tanon' ),
+	'author'         => 'ThomasV',
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:Proofread_Page',
 	'descriptionmsg' => 'proofreadpage_desc',
 );
@@ -201,7 +201,10 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'ProofreadPage::onLoadExtensionSchema
 $wgHooks['OutputPageParserOutput'][] = 'ProofreadPage::onOutputPageParserOutput';
 $wgHooks['wgQueryPages'][] = 'ProofreadPage::onwgQueryPages';
 $wgHooks['GetPreferences'][] = 'ProofreadPage::onGetPreferences';
-$wgHooks['CustomEditor'][] = 'ProofreadPage::onCustomEditor';
+if ( !( isset( $wgProofreadPageUseSemanticForms ) && $wgProofreadPageUseSemanticForms ) ) {
+	// use custom editor for index pages only if semantic forms is not used
+        $wgHooks['CustomEditor'][] = 'ProofreadPage::onCustomEditor';
+}
 $wgHooks['CanonicalNamespaces'][] = 'ProofreadPage::addCanonicalNamespaces';
 $wgHooks['SkinTemplateNavigation'][] = 'ProofreadPage::onSkinTemplateNavigation';
 $wgHooks['ContentHandlerDefaultModelFor'][] = 'ProofreadPage::onContentHandlerDefaultModelFor';
