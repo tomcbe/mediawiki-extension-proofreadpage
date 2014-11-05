@@ -121,9 +121,20 @@ class FilePagination extends Pagination {
 	 * @return Title
 	 */
 	private function buildPageTitleFromPageNumber( $pageNumber ) {
-		return Title::makeTitle(
-			$this->context->getPageNamespaceId(),
-			$this->index->getTitle()->getText() . '/' . $pageNumber
+		$indexTitle =  $this->index->getTitle()->getText();
+		// get the filename (all before the first slash):
+		$pageTitle = strtok( $indexTitle, '/' );
+		$pageTitle .= '/' . $pageNumber;
+		$transcriptionId = strtok( '/' );
+		if ( $transcriptionId !== false ) {
+			// append the transcription id (if present)
+			$pageTitle .= '/' . $transcriptionId;
+		}
+		return $this->getFileFromTitle(
+			Title::makeTitle(
+				$this->context->getPageNamespaceId(),
+				$pageTitle
+			)
 		);
 	}
 

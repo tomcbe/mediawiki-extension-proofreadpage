@@ -47,7 +47,13 @@ class FileProvider {
 	 */
 	public function getForIndexPage( ProofreadIndexPage $page ) {
 		return $this->getFileFromTitle(
-			Title::makeTitle( NS_IMAGE, $page->getTitle()->getText() )
+			// index pages can have a slash after the filename
+			// to make multiple transcriptions based on the same
+			// file possible, this is removed to get the image file
+			Title::makeTitle(
+				NS_IMAGE,
+				strtok( $page->getTitle()->getText(), '/' )
+			)
 		);
 	}
 
