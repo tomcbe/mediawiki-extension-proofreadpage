@@ -19,6 +19,7 @@
  * @ingroup ProofreadPage
  */
 
+use Title;
 use ProofreadPage\Context;
 use ProofreadPage\FileNotFoundException;
 use ProofreadPage\Pagination\PageList;
@@ -309,6 +310,13 @@ class ProofreadIndexPage {
 		return $this->getLinksToNamespace( $this->getText(), Context::getDefaultContext()->getPageNamespaceId() );
 	}
 
+    /**
+      * @return array( Title[], string[] )
+      */
+     public function getLinksToFileNamespace() {
+         // TODO: use the Context object?
+         return $this->getLinksToNamespace( $this->getText(), NS_FILE );
+     } 
 	/**
 	 * @return array|null
 	 */

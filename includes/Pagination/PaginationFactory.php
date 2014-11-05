@@ -2,6 +2,7 @@
 
 namespace ProofreadPage\Pagination;
 
+use Title;
 use ProofreadIndexPage;
 use ProofreadPage\Context;
 use ProofreadPage\FileNotFoundException;
@@ -60,13 +61,20 @@ class PaginationFactory {
 				$file,
 				$this->context
 			);
-		} else {
-			$links = $indexPage->getLinksToPageNamespace();
+        } else {
+            // TODO: handle this case seperately from the normal case where
+            // links to the page namespace are used
+            $links = $indexPage->getLinksToFileNamespace();
+			// $links = $indexPage->getLinksToPageNamespace();
 			$pages = array();
-			$pageNumbers = array();
-			foreach( $links as $link ) {
-				$pages[] = new ProofreadPagePage( $link[0], $indexPage );
-				$pageNumbers[] = new PageNumber( $link[1] );
+            $pageNumbers = array();
+            $titleParts = explode( '/', $indexPage->getTitle()->getText() );
+            $idPart = array_pop( $titleParts );
+            $pageLink = '';
+            foreach( $links as $link ) {
+                $pageTitle = 'File:' . $link[0]->getText() . '/' . $idPart;
+				$pages[] = new ProofreadPagePage( Title::newFromText( $pageTitle ), $indexPage );
+                $pageNumbers[] = new PageNumber( $link[1] );
 			}
 			return new PagePagination( $indexPage, $pages, $pageNumbers );
 		}
