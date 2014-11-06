@@ -72,7 +72,7 @@ class PaginationFactory {
             $idPart = array_pop( $titleParts );
             $pageLink = '';
             foreach( $links as $link ) {
-                $pageTitle = 'File:' . $link[0]->getText() . '/' . $idPart;
+                $pageTitle = 'Page:' . $link[0]->getText() . '/' . $idPart;
 				$pages[] = new ProofreadPagePage( Title::newFromText( $pageTitle ), $indexPage );
                 $pageNumbers[] = new PageNumber( $link[1] );
 			}
