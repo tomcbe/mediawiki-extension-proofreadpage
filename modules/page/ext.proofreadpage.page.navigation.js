@@ -13,6 +13,8 @@
 			case 'monobook':
 			case 'modern':
 				return '#p-cactions ul';
+            case 'chameleon':
+                return '#p-namespaces ul'
 			default:
 				return '';
 		}
